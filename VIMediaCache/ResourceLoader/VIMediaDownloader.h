@@ -29,6 +29,9 @@
 
 @interface VIMediaDownloader : NSObject
 
++ (NSDictionary *) header;
++ (void) setHeader:(NSDictionary*)val;
+
 - (instancetype)initWithURL:(NSURL *)url cacheWorker:(VIMediaCacheWorker *)cacheWorker;
 @property (nonatomic, strong, readonly) NSURL *url;
 @property (nonatomic, weak) id<VIMediaDownloaderDelegate> delegate;

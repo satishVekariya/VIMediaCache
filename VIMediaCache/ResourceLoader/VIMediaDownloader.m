@@ -384,6 +384,8 @@ didCompleteWithError:(nullable NSError *)error {
 
 @implementation VIMediaDownloader
 
+static NSDictionary *header;
+
 - (void)dealloc {
     [[VIMediaDownloaderStatus shared] removeURL:self.url];
 }
@@ -485,6 +487,18 @@ didCompleteWithError:(nullable NSError *)error {
         if ([self.delegate respondsToSelector:@selector(mediaDownloader:didFinishedWithError:)]) {
             [self.delegate mediaDownloader:self didFinishedWithError:error];
         }
+    }
+}
+
++ (NSDictionary *)header {
+    @synchronized(self) {
+        return header;
+    }
+}
+
++ (void)setHeader:(NSDictionary *)val {
+    @synchronized(self) {
+        header = val;
     }
 }
 
