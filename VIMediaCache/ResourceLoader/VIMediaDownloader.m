@@ -211,6 +211,11 @@ didCompleteWithError:(nullable NSError *)error {
         request.cachePolicy = NSURLRequestReloadIgnoringLocalAndRemoteCacheData;
         NSString *range = [NSString stringWithFormat:@"bytes=%lld-%lld", fromOffset, endOffset];
         [request setValue:range forHTTPHeaderField:@"Range"];
+        if (VIMediaDownloader.header) {
+            [VIMediaDownloader.header enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+                [request setValue:obj forHTTPHeaderField:key];
+            }];
+        }
         self.startOffset = action.range.location;
         self.task = [self.session dataTaskWithRequest:request];
         [self.task resume];
